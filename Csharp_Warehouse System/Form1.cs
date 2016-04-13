@@ -12,23 +12,29 @@ namespace Csharp_Warehouse_System
 {
     public partial class Form1 : Form
     {
+        //to record the number of label, textbox, button
         int L_Number = 8, T_Number = 10, B_Number = 12;
+        //to change the form easily
         Label[] labels = new Label[8];
         TextBox[] textboxes = new TextBox[10];
         Button[] buttons = new Button[12];
+        //the enum of form state
         enum FormState { Null, Supervisor, Employee, Add, Deduct, Modify, GetInfo, NewP, DelP};
 
         public Form1()
         {
             InitializeComponent();
 
+            //to use tooltip
             ToolTip tooltip = new ToolTip();
 
+            //initialization of tooltip
             tooltip.AutoPopDelay = 5000;
             tooltip.InitialDelay = 1000;
             tooltip.ReshowDelay = 500;
             tooltip.IsBalloon = true;
 
+            //initialization of tooltip message
             tooltip.SetToolTip(L_Info, "顯示資訊");
             tooltip.SetToolTip(L_Account, "帳號");
             tooltip.SetToolTip(L_Password, "密碼");
@@ -62,7 +68,7 @@ namespace Csharp_Warehouse_System
             tooltip.SetToolTip(B_Find, "按此查訊");
             tooltip.SetToolTip(B_Done, "Done");
 
-
+            //labels point to every label
             labels[0] = L_Info;
             labels[1] = L_Account;
             labels[2] = L_Password;
@@ -72,6 +78,7 @@ namespace Csharp_Warehouse_System
             labels[6] = L_M_Price;
             labels[7] = L_List;
 
+            //textboxes point to every textbox
             textboxes[0] = T_Account;
             textboxes[1] = T_Password;
             textboxes[2] = T_M_ID;
@@ -82,8 +89,11 @@ namespace Csharp_Warehouse_System
             textboxes[7] = T_M_Name1;
             textboxes[8] = T_M_Number1;
             textboxes[9] = T_M_Price1;
+
+            //to replace the word in Password to '*'
             textboxes[1].PasswordChar = '*';
 
+            //buttons point to every button
             buttons[0] = B_Login;
             buttons[1] = B_Add;
             buttons[2] = B_Deduct;
@@ -97,6 +107,7 @@ namespace Csharp_Warehouse_System
             buttons[10] = B_Find;
             buttons[11] = B_Done;
 
+            //initialization of label text
             L_Info.Text = "請輸入帳號密碼以登入";
             L_Account.Text = "帳號：";
             L_Password.Text = "密碼：";
@@ -105,6 +116,7 @@ namespace Csharp_Warehouse_System
             L_M_Number.Text = "商品數量";
             L_M_Price.Text = "商品價格";
 
+            //initialization of button text
             B_Login.Text = "登入";
             B_Add.Text = "新增商品";
             B_Deduct.Text = "扣除商品";
@@ -117,19 +129,23 @@ namespace Csharp_Warehouse_System
             B_Sum.Text = "全商品情況";
             B_Find.Text = "查詢";
 
+            //initialization of account
             People.NewPerson(true, "Supervisor01", "Super01");
             People.NewPerson(false, "Employee01", "Emp01");
             People.NewPerson(false, "Employee02", "Emp02");
             People.NewPerson(false, "Employee03", "Emp03");
-
-            return;
         }
 
         class People
         {
+            //this class is to store the accounts
+
+            //the array to store all accounts
             public static People[] people = new People[50];
+            //the number of accounts now
             public static int number = 0;
 
+            //to represent if supervisor or not
             bool supervisor;
             string account, password;
 
@@ -172,30 +188,35 @@ namespace Csharp_Warehouse_System
                 }
             }
 
+            //the constructor of People, which is used to new account
             People(bool super, string acc, string pw)
             {
                 supervisor = super;
                 account = acc;
                 password = pw;
                 ++number;
-
-                return;
             }
             
             public static bool NewPerson(bool super, string acc, string pw)
             {
+                //this function is to judge if the data can be created
+
+
                 if (acc[0] >= 'A' && acc[0] <= 'Z')
                 {
+                    //the first char is capital
                     for (int i = 0; i < number; ++i)
                     {
                         if (people[i].Account == acc)
                         {
+                            //there has the same account
                             MessageBox.Show("已有此帳號!!請重新想一個!!", "系統訊息", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 
                             return false;
                         }
                     }
 
+                    //to create the account
                     people[number] = new People(super, acc, pw);
                     MessageBox.Show("恭喜創帳號成功!!", "系統訊息", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 
@@ -203,6 +224,7 @@ namespace Csharp_Warehouse_System
                 }
                 else
                 {
+                    //the first char is not capital
                     MessageBox.Show("帳號開頭必須大寫!!請重新想一個!!", "系統訊息", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 
                     return false;
@@ -211,13 +233,16 @@ namespace Csharp_Warehouse_System
 
             public static bool DeletePerson(string acc)
             {
+                //this function is to delete the account
+
                 for (int i = 0; i < number; ++i)
                 {
                     if (people[i].Account == acc)
                     {
-                        //to delete
+                        //the account is found, then to delete
                         for (int j = i + 1; j < number; ++j)
                         {
+                            //to overwrite the data directly
                             people[j - 1] = people[j];
                         }
 
@@ -236,6 +261,8 @@ namespace Csharp_Warehouse_System
 
             public static int FindPerson(string acc, string pw)
             {
+                //this function is to find the account
+
                 if (acc == "" || pw == "")
                     return -1;
 
@@ -243,7 +270,8 @@ namespace Csharp_Warehouse_System
                 {
                     if (people[i].Account == acc && people[i].Password == pw)
                     {
-                            return people[i].Supervisor ? 1 : 2 ;
+                        //the account is found, 1 represent "supervisor", and 2 represent "employee"
+                        return people[i].Supervisor ? 1 : 2 ;
                     }
                 }
 
@@ -253,10 +281,13 @@ namespace Csharp_Warehouse_System
 
         class Merchandise
         {
+            //this class is to store the merchandise
             string name;
             int ID, price, number;
 
+            //the array to store all merchandise
             public static Merchandise[] merchandise = new Merchandise[50];
+            //category is the number of merchandise now
             public static int category = 0, focus = 0;
             
             public int Id
@@ -283,6 +314,7 @@ namespace Csharp_Warehouse_System
                 set { number = value;  }
             }
 
+            //the constructor of Merchandise, which is used to new merchandise
             Merchandise(int id, string na, int p, int nu)
             {
                 ID = id;
@@ -290,16 +322,18 @@ namespace Csharp_Warehouse_System
                 price = p;
                 number = nu;
                 ++category;
-
-                return;
             }
 
             public static bool NewMerchandise(int id, string na, int p, int nu)
             {
+                //this function is to judge if the data can be created
+
                 for (int i = 0; i < category; ++i)
                 {
+                    //to find by id
                     if (merchandise[i].Id == id)
                     {
+                        //there has the same merchandise
                         merchandise[i].Number += nu;
                         MessageBox.Show("已有此商品!!直接將數量加進其中!!", "系統訊息", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 
@@ -307,6 +341,7 @@ namespace Csharp_Warehouse_System
                     }
                 }
 
+                //to create the merchandise
                 merchandise[category] = new Merchandise(id, na, p, nu);
                 MessageBox.Show("恭喜新增商品成功!!", "系統訊息", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 
@@ -315,24 +350,26 @@ namespace Csharp_Warehouse_System
 
             public static bool DeductMerchandise(int id, int nu)
             {
-                //by ID
+                //this function is to deduct the merchandise
+
+                //to find by ID
                 for (int i = 0; i < category; ++i)
                 {
                     if (merchandise[i].Id == id)
                     {
                         if( merchandise[i].Number > nu )
                         {
-                            //to deduct
+                            //the merchandise is found, and then to deduct
                             merchandise[i].Number -= nu;
 
                             MessageBox.Show("已減少此商品!!", "系統訊息", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                         }
                         else
                         {
-                            //to delete
-                            //to destroy?????
-                            for(int j = i + 1; j<category;++j)
+                            //the merchandise is found, and then to delete
+                            for (int j = i + 1; j<category;++j)
                             {
+                                //to overwrite the data directly
                                 merchandise[j - 1] = merchandise[j];
                             }
 
@@ -352,24 +389,26 @@ namespace Csharp_Warehouse_System
 
             public static bool DeductMerchandise(string na, int nu)
             {
-                //by name
+                //this function is to deduct the merchandise
+
+                //to find by name
                 for (int i = 0; i < category; ++i)
                 {
                     if (merchandise[i].Name == na)
                     {
                         if (merchandise[i].Number > nu)
                         {
-                            //to deduct
+                            //the merchandise is found, and then to deduct
                             merchandise[i].Number -= nu;
 
                             MessageBox.Show("已減少此商品!!", "系統訊息", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                         }
                         else
                         {
-                            //to delete
-                            //to destroy?????
+                            //the merchandise is found, and then to delete
                             for (int j = i + 1; j < category; ++j)
                             {
+                                //to overwrite the data directly
                                 merchandise[j - 1] = merchandise[j];
                             }
 
@@ -389,11 +428,14 @@ namespace Csharp_Warehouse_System
 
             public static int FindMerchandise(int id)
             {
-                //by ID
-                for(int i =0; i<category; ++i)
+                //this function is to find the merchandise
+
+                //to find by ID
+                for (int i =0; i<category; ++i)
                 {
                     if (merchandise[i].Id == id)
                     {
+                        //the merchandise is found
                         focus = i;
                         return focus;
                     }
@@ -404,11 +446,14 @@ namespace Csharp_Warehouse_System
 
             public static int FindMerchandise(string na)
             {
-                //by name
+                //this function is to find the merchandise
+
+                //to find by name
                 for (int i = 0; i < category; ++i)
                 {
                     if (merchandise[i].Name== na)
                     {
+                        //the merchandise is found
                         focus = i;
                         return focus;
                     }
@@ -418,13 +463,12 @@ namespace Csharp_Warehouse_System
             }
         }
         
+        //the function of buttons
 
         private void B_Login_Click(object sender, EventArgs e)
         {
             //to login
             Form1_Load(this, e, People.FindPerson(textboxes[0].Text, textboxes[1].Text));
-
-            return;
         }
 
         private void B_Logout_Click(object sender, EventArgs e)
@@ -432,8 +476,6 @@ namespace Csharp_Warehouse_System
             //to logout
             MessageBox.Show("辛苦了!!路上小心!!", "系統訊息", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             Form1_Load(this, e);
-
-            return;
         }
 
         private void B_Add_Click(object sender, EventArgs e)
@@ -442,8 +484,6 @@ namespace Csharp_Warehouse_System
             Form1_Load(this, e, (int)FormState.Add);
 
             B_Done.Text = "新增";
-
-            return;
         }
         
         private void B_Deduct_Click(object sender, EventArgs e)
@@ -452,8 +492,6 @@ namespace Csharp_Warehouse_System
             Form1_Load(this, e, (int)FormState.Deduct);
             
             B_Done.Text = "刪除";
-
-            return;
         }
 
 
@@ -463,16 +501,12 @@ namespace Csharp_Warehouse_System
             Form1_Load(this, e, (int)FormState.Modify);
 
             B_Done.Text = "修改";
-
-            return;
         }
 
         private void B_Get_Info_Click(object sender, EventArgs e)
         {
             //to go to info mode
             Form1_Load(this, e, (int)FormState.GetInfo);
-
-            return;
         }
 
         private void B_Find_Click(object sender, EventArgs e)
@@ -480,9 +514,11 @@ namespace Csharp_Warehouse_System
             //to find
             if (T_M_ID.Text != "")
             {
+                // to find by id
                 int j = Merchandise.FindMerchandise(int.Parse(T_M_ID.Text));
                 if (j != -1)
                 {
+                    //found
                     L_M_Name.Visible = true;
                     L_M_Number.Visible = true;
                     L_M_Price.Visible = true;
@@ -497,6 +533,7 @@ namespace Csharp_Warehouse_System
 
                     if (B_Done.Visible)
                     {
+                        //in the modify mode
                         for (j = 2; j < 6; ++j)
                             textboxes[j].Enabled = false;
                         for (; j < T_Number; ++j)
@@ -511,9 +548,11 @@ namespace Csharp_Warehouse_System
             }
             else if (T_M_Name.Text != "")
             {
+                //to find by name
                 int j = Merchandise.FindMerchandise(T_M_Name.Text);
                 if (j != -1)
                 {
+                    //found
                     L_M_Name.Visible = true;
                     L_M_Number.Visible = true;
                     L_M_Price.Visible = true;
@@ -525,6 +564,7 @@ namespace Csharp_Warehouse_System
 
                     if (B_Done.Visible)
                     {
+                        //in the modify mode
                         for (j = 2; j < 6; ++j)
                             textboxes[j].Enabled = false;
                         for (; j < T_Number; ++j)
@@ -538,12 +578,11 @@ namespace Csharp_Warehouse_System
             }
             else
                 MessageBox.Show("ID或名稱不能皆為空!!請重新輸入!!", "系統訊息", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-
-            return;
         }
 
         private void B_Done_Click(object sender, EventArgs e)
         {
+            //to switch the mode by its text
             switch(((Button)sender).Text)
             {
                 case "新增":
@@ -574,11 +613,13 @@ namespace Csharp_Warehouse_System
                 case "修改":
                     if(!T_M_ID1.Enabled)
                     {
+                        //not found yet
                         MessageBox.Show("請先查詢商品!!", "系統訊息", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                         Form1_Load(this, e, (int)FormState.Modify);
                         break;
                     }
 
+                    //to modify the data
                     if (T_M_ID1.Text != "")
                         Merchandise.merchandise[Merchandise.focus].Id = int.Parse(T_M_ID1.Text);
 
@@ -622,8 +663,6 @@ namespace Csharp_Warehouse_System
                 default:
                     break;
             }
-
-            return;
         }
 
         private void B_Staff_Click(object sender, EventArgs e)
@@ -640,13 +679,12 @@ namespace Csharp_Warehouse_System
             L_List.Visible = true;
             L_List.Text = "員工清單:\n";
 
+            //to add the info to List
             for(int i = 0; i<People.number;++i)
             {
                 L_List.Text += People.people[i].Supervisor ? "身份: 工頭  " : "身份: 勞工  ";
                 L_List.Text += "帳號: " + People.people[i].Account + "  密碼: " + People.people[i].Password + "\n";
             }
-
-            return;
         }
 
         private void B_Sum_Click(object sender, EventArgs e)
@@ -663,45 +701,37 @@ namespace Csharp_Warehouse_System
             L_List.Visible = true;
             L_List.Text = "商品清單:\n";
 
+            //to add the info to List
             for (int i = 0; i < Merchandise.category; ++i)
             {
                 L_List.Text += "商品ID: " + Merchandise.merchandise[i].Id.ToString() + "  商品名稱" + Merchandise.merchandise[i].Name + "  商品數量: " + Merchandise.merchandise[i].Number + "  商品價格: " + Merchandise.merchandise[i].Price + "\n";
             }
-
-            return;
         }
 
         private void B_Add_P_Click(object sender, EventArgs e)
         {
             Form1_Load(this, e, (int)FormState.NewP);
-
-            return;
         }
 
         private void B_Del_P_Click(object sender, EventArgs e)
         {
             Form1_Load(this, e, (int)FormState.DelP);
-
-            return;
         }
 
         private void T_Account_KeyPress(object sender, KeyPressEventArgs e)
         {
+            //to judge if the input is capital
             if (e.KeyChar >= 'a' && e.KeyChar <= 'z')
                 L_Info.Text = "小寫";
             else if (e.KeyChar >= 'A' && e.KeyChar <= 'Z')
                 L_Info.Text = "大寫";
             else
                 L_Info.Text = "其他";
-
-            return;
         }
 
         private void T_Password_KeyPress(object sender, KeyPressEventArgs e)
         {
             T_Account_KeyPress(this, e);
-
-            return;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -725,8 +755,6 @@ namespace Csharp_Warehouse_System
 
             for (int i = 1; i < B_Number; ++i)
                 buttons[i].Visible = false;
-
-            return;
         }
 
         private void Form1_Load(object sender, EventArgs e, int mode)
@@ -913,8 +941,6 @@ namespace Csharp_Warehouse_System
                     MessageBox.Show("Form1_Load GG", "系統訊息", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                     break;
             }
-
-            return;
         }
     }
 }

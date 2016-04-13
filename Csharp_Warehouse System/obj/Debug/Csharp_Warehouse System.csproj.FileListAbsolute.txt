@@ -7,3 +7,12 @@ E:\Lesson\C#\Csharp_Warehouse System\Csharp_Warehouse System\obj\Debug\Csharp_Wa
 E:\Lesson\C#\Csharp_Warehouse System\Csharp_Warehouse System\obj\Debug\Csharp_Warehouse System.csproj.GenerateResource.Cache
 E:\Lesson\C#\Csharp_Warehouse System\Csharp_Warehouse System\obj\Debug\Csharp_Warehouse System.exe
 E:\Lesson\C#\Csharp_Warehouse System\Csharp_Warehouse System\obj\Debug\Csharp_Warehouse System.pdb
+F:\Lesson\C#\Csharp_Warehouse System\Csharp_Warehouse System\bin\Debug\Csharp_Warehouse System.exe.config
+F:\Lesson\C#\Csharp_Warehouse System\Csharp_Warehouse System\obj\Debug\Csharp_Warehouse System.exe
+F:\Lesson\C#\Csharp_Warehouse System\Csharp_Warehouse System\obj\Debug\Csharp_Warehouse System.pdb
+F:\Lesson\C#\Csharp_Warehouse System\Csharp_Warehouse System\bin\Debug\Csharp_Warehouse System.exe
+F:\Lesson\C#\Csharp_Warehouse System\Csharp_Warehouse System\bin\Debug\Csharp_Warehouse System.pdb
+F:\Lesson\C#\Csharp_Warehouse System\Csharp_Warehouse System\obj\Debug\Csharp_Warehouse System.csprojResolveAssemblyReference.cache
+F:\Lesson\C#\Csharp_Warehouse System\Csharp_Warehouse System\obj\Debug\Csharp_Warehouse_System.Form1.resources
+F:\Lesson\C#\Csharp_Warehouse System\Csharp_Warehouse System\obj\Debug\Csharp_Warehouse_System.Properties.Resources.resources
+F:\Lesson\C#\Csharp_Warehouse System\Csharp_Warehouse System\obj\Debug\Csharp_Warehouse System.csproj.GenerateResource.Cache
